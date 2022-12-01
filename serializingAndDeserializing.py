@@ -1,5 +1,7 @@
-import json
+# JSON - LOADS - deserializing and  DUMPS - serializing Example
 
+
+import json
 
 
 # LOADS - deserializing

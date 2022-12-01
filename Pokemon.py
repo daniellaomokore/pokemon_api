@@ -48,26 +48,27 @@ import requests
 import json
 import logging
 from config import api_auth_key
-from pprint import pprint
 
 logging.basicConfig(filemode='example.log', format='%(asctime)s %(message)s', encoding='utf-8', level=logging.WARNING)
 
-
-
 try:
-    pokemon_number = input("What is he Pokemon's ID?")
+    pokemon_number = int(input("What is the Pokemon's ID number?"))
     url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
     response = requests.get(url)
     response.raise_for_status()
+    #dont run rest of code
 except requests.exceptions.ConnectionError as cerr:
     print("Sorry a Connection error has been found")
     logging.warning(cerr)
+    #dont run the rest of the code
 except requests.exceptions.HTTPError as err:
     print("Bad Status Code", response.status_code)
+    #dont run rest of code
 else:
     print("Status code:", response.status_code)
 
 
+# YOU MIGHT NEED TO NEST ALL CODE BELOW INTO THE ELSE: above
 
 #print(type(response))   ## prints the data type : 'request.models.Response''
 
@@ -91,21 +92,39 @@ headers = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}
 
 
+
+
+
 # POST REQUEST W/headers and body
-result = requests.post(
-    'http://httpbin.org/post', headers=headers,
-    data=body
-)
+try:
+    result = requests.post(
+        'http://httpbin.org/post', headers=headers,
+        data=body
+    )
+except requests.exceptions.HTTPError:
+    print("POST Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(result.status_code))
+else:
+    print("POST Request is successful, Status code:", result.status_code)
+    print(result.text)
+
+
+
 
 
 # GET REQUEST with headers and query string (using 'params')
-result1 = requests.get(
-    'http://httpbin.org/get', params=body, headers=headers,
-)
+try:
+    result1 = requests.get(
+        'http://httpbin.org/get', params=body, headers=headers,
+    )
+except requests.exceptions.HTTPError:
+    print("GET Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(result1.status_code))
+else:
+    print("GET Request is successful, Status code:", result1.status_code)
+    print(result1.text)
 
 
-print(result.text)
-print(result1.text)
+
+
 
 
 # serializing- turning python dictionary into json string
@@ -113,7 +132,6 @@ print("Json string, name:", json.dumps(pokemon['name'], indent=4))
 print("Json string, weight:", json.dumps(pokemon['weight'], indent=4))
 print("Json string, height:", json.dumps(pokemon['height'], indent=4))
 #print("Json string- everything:", json.dumps(pokemon, indent=4))
-
 
 
 

@@ -12,11 +12,10 @@ You can retrieve information about different Pokemon from urls
 https://pokeapi.co/api/v2/pokemon/6/
 
 """
+
+"""
 import json
-
-import endpoint
-
-"""import requests
+import requests
 from pprint import pprint
 
 pokemon_number = input("What is he Pokemon's ID?")
@@ -38,35 +37,83 @@ Get the height and weight of a specific Pokemon and print the output
 
 """
 
+
+"""
+NOTE:
+-json.loads() method converts a JSON string into a Python Dictionary:deserializing 
+-json.dumps() method converts a Python object and into a JSON string : serializing
+
+"""
 import requests
+import json
+import logging
+from config import api_auth_key
 from pprint import pprint
 
+logging.basicConfig(filemode='example.log', format='%(asctime)s %(message)s', encoding='utf-8', level=logging.WARNING)
 
-pokemon_number = input("What is he Pokemon's ID?")
 
-url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
 
-response = requests.get(url)
-print(response.status_code)
+try:
+    pokemon_number = input("What is he Pokemon's ID?")
+    url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
+    response = requests.get(url)
+    response.raise_for_status()
+except requests.exceptions.ConnectionError as cerr:
+    print("Sorry a Connection error has been found")
+    logging.warning(cerr)
+except requests.exceptions.HTTPError as err:
+    print("Bad Status Code", response.status_code)
+else:
+    print("Status code:", response.status_code)
 
-pokemon = response.json() # returns the JSON as python dictionary object (if the result was written in JSON format, if not it raises an error).
-#print(pprint(pokemon))
-data = json.loads()
+
+
+# print(type(response))
+
+pokemon = response.json()  # returns as a python dictionary object
+# print(type(pokemon))
+#print(pprint(pokemon)) # print entire dictionary for the chosen pokemon
 
 nameOfPoke = pokemon['name']
 weightOfPoke = pokemon['weight']
-print("Name: ", nameOfPoke)
-print("Weight:", weightOfPoke)
+
+print("Name: ", nameOfPoke)      # in python object form
+print(json.dumps(nameOfPoke))    # in json string form
+print("Weight: ", weightOfPoke)
+
+
+body = {"Name": {nameOfPoke}, "Weight": {weightOfPoke}}
 
 headers = {'content-type': 'application/json',
-           'Authorization': '[your API key]'}
+           'Authorization': '{key}'.format(key=api_auth_key)}
+
+
+
+# POST REQUEST W/headers and body
 result = requests.post(
     'http://httpbin.org/post', headers=headers,
-    data=json.dumps("Name: {} , Weight: {}".format(nameOfPoke, weightOfPoke)),
+    data=body
 )
 
-print(result.status_code)
+
+# GET REQUEST with headers and query string (using 'params')
+result1 = requests.get(
+    'http://httpbin.org/get', params=body, headers=headers,
+)
+
+
 print(result.text)
+print(result1.text)
+
+# serializing- turning python dictionary into jon string
+
+print("Json string, name:", json.dumps(pokemon['name'], indent=4))
+print("Json string, weight:", json.dumps(pokemon['weight'], indent=4))
+print("Json string, height:", json.dumps(pokemon['height'], indent=4))
+#print("Json string- everything:", json.dumps(pokemon, indent=4))
+
+
 
 
 """

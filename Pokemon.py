@@ -69,11 +69,11 @@ else:
 
 
 
-# print(type(response))
+#print(type(response))   ## prints the data type : 'request.models.Response''
 
 pokemon = response.json()  # returns as a python dictionary object
-# print(type(pokemon))
-#print(pprint(pokemon)) # print entire dictionary for the chosen pokemon
+#print(type(pokemon))     # prints the data type : python dict
+#print(pprint(pokemon)) # prints entire python dictionary for the chosen pokemon
 
 nameOfPoke = pokemon['name']
 weightOfPoke = pokemon['weight']
@@ -83,11 +83,12 @@ print(json.dumps(nameOfPoke))    # in json string form
 print("Weight: ", weightOfPoke)
 
 
+# INITIALISING THE BODY AND HEADERS FOR REQUESTS
+# YOU would probably have a different body depending on the request you want to do
 body = {"Name": {nameOfPoke}, "Weight": {weightOfPoke}}
 
 headers = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}
-
 
 
 # POST REQUEST W/headers and body
@@ -106,8 +107,8 @@ result1 = requests.get(
 print(result.text)
 print(result1.text)
 
-# serializing- turning python dictionary into jon string
 
+# serializing- turning python dictionary into json string
 print("Json string, name:", json.dumps(pokemon['name'], indent=4))
 print("Json string, weight:", json.dumps(pokemon['weight'], indent=4))
 print("Json string, height:", json.dumps(pokemon['height'], indent=4))

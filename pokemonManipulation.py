@@ -29,6 +29,7 @@ print("{} has all of the following abilities: {}, it weighs {}.\n".format(pokemo
 
 ### EXAMPLE 2 ###
 ### REMAPPING or NORMALISING Data with MAP ###
+# Remember map is used on a function and a list #
 
 url20AllPoke= "https://pokeapi.co/api/v2/pokemon/"    # all 20 pokemon at this url
 response2 = requests.get(url20AllPoke)

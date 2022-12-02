@@ -93,7 +93,8 @@ weightOfPoke = pokemon['weight']
 
 # INITIALISING THE BODY AND HEADERS FOR REQUESTS
 # YOU would probably have a different body depending on the request you want to do
-body = {"Name": " {}".format(nameOfPoke), "Weight": "{}".format(weightOfPoke)}
+body = {"Name": " {}".format(nameOfPoke),
+        "Weight": "{}".format(weightOfPoke)}
 
 headers = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}
@@ -116,12 +117,17 @@ else:
 
 
 
+body1 = {"gum": 5,
+        "nim": 10}
+
+headers1 = {'content-type': 'application/json',
+           'Authorization': '{key}'.format(key=api_auth_key)}
 
 
 # GET REQUEST with headers and query string (using 'params')
 try:
     result1 = requests.get(
-        'http://httpbin.org/get', params=body, headers=headers,
+        'http://httpbin.org/get', params=body1, headers=headers1,
     )
 except requests.exceptions.HTTPError:
     print("GET Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(result1.status_code))

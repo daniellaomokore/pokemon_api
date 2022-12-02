@@ -91,7 +91,8 @@ print("Weight: ", weightOfPoke)
 
 # INITIALISING THE BODY AND HEADERS FOR REQUESTS
 # YOU would probably have a different body depending on the request you want to do
-body = {"Name": " {}".format(nameOfPoke), "Weight": "{}".format(weightOfPoke)}
+body = {"Name": " {}".format(nameOfPoke),
+        "Weight": "{}".format(weightOfPoke)}
 
 headers = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}

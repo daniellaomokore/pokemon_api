@@ -51,7 +51,6 @@ import requests
 import json
 import logging
 from config import api_auth_key
-from pprint import pprint
 
 logging.basicConfig(filemode='example.log', format='%(asctime)s %(message)s', encoding='utf-8', level=logging.WARNING)
 
@@ -60,14 +59,11 @@ try:
     url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number) # for individual pokemon by id number
     response = requests.get(url)
     response.raise_for_status()
-    #dont run rest of code
 except requests.exceptions.ConnectionError as cerr:
     print("Sorry a Connection error has been found")
     logging.warning(cerr)
-    #dont run the rest of the code
 except requests.exceptions.HTTPError as err:
     print("Bad Status Code", response.status_code)
-    #dont run rest of code
 else:
     print("Status code:", response.status_code)
 

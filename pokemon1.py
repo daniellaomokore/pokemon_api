@@ -57,14 +57,11 @@ try:
     url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
     response = requests.get(url)
     response.raise_for_status()
-    #dont run rest of code
 except requests.exceptions.ConnectionError as cerr:
     print("Sorry a Connection error has been found")
     logging.warning(cerr)
-    #dont run the rest of the code
 except requests.exceptions.HTTPError as err:
     print("Bad Status Code", response.status_code)
-    #dont run rest of code
 else:
     print("Status code:", response.status_code)
 

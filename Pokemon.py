@@ -51,12 +51,13 @@ import requests
 import json
 import logging
 from config import api_auth_key
+from pprint import pprint
 
 logging.basicConfig(filemode='example.log', format='%(asctime)s %(message)s', encoding='utf-8', level=logging.WARNING)
 
 try:
     pokemon_number = int(input("What is the Pokemon's ID number?"))
-    url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
+    url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number) # for individual pokemon by id number
     response = requests.get(url)
     response.raise_for_status()
     #dont run rest of code
@@ -76,6 +77,7 @@ else:
 # print(type(response))   ## prints the data type : 'request.models.Response''
 
 pokemon = response.json()  # returns as a python dictionary object, extracting the API result inJSON format
+
 
 
 #print(type(pokemon))     # prints the data type : python dict
@@ -133,13 +135,12 @@ else:
 
 
 
-# serializing- turning python dictionary into json string
+"""# serializing- turning python dictionary into json string
 print("Json string, name:", json.dumps(pokemon['name'], indent=4))
 print("Json string, weight:", json.dumps(pokemon['weight'], indent=4))
 print("Json string, height:", json.dumps(pokemon['height'], indent=4))
 #print("Json string- everything:", json.dumps(pokemon, indent=4))
-
-
+"""
 
 """
 

@@ -37,7 +37,6 @@ Get the height and weight of a specific Pokemon and print the output
 
 """
 
-
 """
 NOTE:
 -json.loads() method converts a JSON string into a Python Dictionary:deserializing 

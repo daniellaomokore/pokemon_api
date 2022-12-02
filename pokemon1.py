@@ -44,8 +44,7 @@ NOTE:
 -json.dumps() method converts a Python object and into a JSON string : serializing
 
 """
-## THIS EXAMPLE USES .JSON AND DUMPS ##
-
+## THIS EXAMPLE USES LOADS AND DUMPS ##
 
 import requests
 import json
@@ -73,20 +72,23 @@ else:
 
 # YOU MIGHT NEED TO NEST ALL CODE BELOW INTO THE ELSE: above
 
-# print(type(response))   ## prints the data type : 'request.models.Response''
-
-pokemon = response.json()  # returns as a python dictionary object, extracting the API result inJSON format
+#print(type(response))   ## prints the data type : 'request.models.Response''
 
 
+#pokemon = response.json()  # returns as a python dictionary object
 #print(type(pokemon))     # prints the data type : python dict
 #print(pprint(pokemon)) # prints entire python dictionary for the chosen pokemon
+
+data = response.text
+
+pokemon = json.loads(data)  # deserializing - turns json string into python dictionary that can be now accessed
 
 nameOfPoke = pokemon['name']
 weightOfPoke = pokemon['weight']
 
-print("Name: ", nameOfPoke)      # in python object form
-print(json.dumps(nameOfPoke))    # in json string form
-print("Weight: ", weightOfPoke)
+#print("Name: ", nameOfPoke)      # in python object form
+#print(json.dumps(nameOfPoke))    # in json string form
+#print("Weight: ", weightOfPoke)
 
 
 # INITIALISING THE BODY AND HEADERS FOR REQUESTS
@@ -95,6 +97,7 @@ body = {"Name": " {}".format(nameOfPoke), "Weight": "{}".format(weightOfPoke)}
 
 headers = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}
+
 
 
 
@@ -110,7 +113,6 @@ except requests.exceptions.HTTPError:
 else:
     print("POST Request is successful, Status code:", result.status_code)
     print(result.text)
-
 
 
 

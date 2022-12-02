@@ -8,7 +8,10 @@
 """
 import requests
 
+
+
 ###EXAMPLE 1###
+
 ### Filtering list data W/ LIST COMPREHENSION ###
 
 pokemon_name = input("Enter a pokemon name:")
@@ -28,10 +31,9 @@ print("{} has all of the following abilities: {}, it weighs {}.\n".format(pokemo
 
 
 ### EXAMPLE 2 ###
-### REMAPPING or NORMALISING Data with MAP ###
-# Remember map is used on a function and a list #
 
-url20AllPoke= "https://pokeapi.co/api/v2/pokemon/"    # all 20 pokemon at this url
+### REMAPPING or NORMALISING Data with MAP ### # Remember map is used on a function and a list #
+url20AllPoke = "https://pokeapi.co/api/v2/pokemon/"    # all 20 pokemon at this url
 response2 = requests.get(url20AllPoke)
 all20Poke = response2.json()
 
@@ -39,9 +41,7 @@ infoOf20Pokemons = all20Poke['results'] #access the list of results for all 20 p
 
 #This funtion grabs just the 'name' of the pokemon in the dictionary that describes it
 def justName(p):
-
     name = p['name']
-
     return name
 
 simpleData = map(justName, infoOf20Pokemons)   # every item in 'infoOf20Pokemons is ran through the 'justName' function

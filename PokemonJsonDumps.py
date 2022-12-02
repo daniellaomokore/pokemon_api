@@ -37,13 +37,15 @@ Get the height and weight of a specific Pokemon and print the output
 
 """
 
+
 """
 NOTE:
 -json.loads() method converts a JSON string into a Python Dictionary:deserializing 
 -json.dumps() method converts a Python object and into a JSON string : serializing
 
 """
-## THIS EXAMPLE USES LOADS AND DUMPS ##
+## THIS EXAMPLE USES .JSON AND DUMPS ##
+
 
 import requests
 import json
@@ -54,7 +56,7 @@ logging.basicConfig(filemode='example.log', format='%(asctime)s %(message)s', en
 
 try:
     pokemon_number = int(input("What is the Pokemon's ID number?"))
-    url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
+    url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number) # for individual pokemon by id number
     response = requests.get(url)
     response.raise_for_status()
 except requests.exceptions.ConnectionError as cerr:
@@ -68,23 +70,21 @@ else:
 
 # YOU MIGHT NEED TO NEST ALL CODE BELOW INTO THE ELSE: above
 
-#print(type(response))   ## prints the data type : 'request.models.Response''
+# print(type(response))   ## prints the data type : 'request.models.Response''
+
+pokemon = response.json()  # returns as a python dictionary object, extracting the API result inJSON format
 
 
-#pokemon = response.json()  # returns as a python dictionary object
+
 #print(type(pokemon))     # prints the data type : python dict
 #print(pprint(pokemon)) # prints entire python dictionary for the chosen pokemon
-
-data = response.text
-
-pokemon = json.loads(data)  # deserializing - turns json string into python dictionary that can be now accessed
 
 nameOfPoke = pokemon['name']
 weightOfPoke = pokemon['weight']
 
-#print("Name: ", nameOfPoke)      # in python object form
-#print(json.dumps(nameOfPoke))    # in json string form
-#print("Weight: ", weightOfPoke)
+print("Name: ", nameOfPoke)      # in python object form
+print(json.dumps(nameOfPoke))    # in json string form
+print("Weight: ", weightOfPoke)
 
 
 # INITIALISING THE BODY AND HEADERS FOR REQUESTS
@@ -94,7 +94,6 @@ body = {"Name": " {}".format(nameOfPoke),
 
 headers = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}
-
 
 
 
@@ -113,11 +112,15 @@ else:
 
 
 
+
+
 body1 = {"gum": 5,
         "nim": 10}
 
 headers1 = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}
+
+
 
 
 # GET REQUEST with headers and query string (using 'params')
@@ -128,7 +131,7 @@ try:
 except requests.exceptions.HTTPError:
     print("GET Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(result1.status_code))
 else:
-    print("GET Request is successful, Status code:", result1.status_code)
+    print("GET Request is successful, Status code: {}".format(result1.status_code))
     print(result1.text)
 
 
@@ -136,13 +139,12 @@ else:
 
 
 
-# serializing- turning python dictionary into json string
+"""# serializing- turning python dictionary into json string
 print("Json string, name:", json.dumps(pokemon['name'], indent=4))
 print("Json string, weight:", json.dumps(pokemon['weight'], indent=4))
 print("Json string, height:", json.dumps(pokemon['height'], indent=4))
 #print("Json string- everything:", json.dumps(pokemon, indent=4))
-
-
+"""
 
 """
 

@@ -46,4 +46,4 @@ def justName(p):
 
 simpleData = map(justName, infoOf20Pokemons)   # every item in 'infoOf20Pokemons is ran through the 'justName' function
                                                # simpleDate is a list of the return values of every map iteration == the names
-print("Names of 20 Pokemon: ",list(simpleData))
+print("Names of 20 Pokemon: ", list(simpleData))

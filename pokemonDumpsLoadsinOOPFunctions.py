@@ -1,4 +1,4 @@
-#my attempt to put the code info classes/functions
+# My attempt to put the code into just functions
 
 """
 Get the height and weight of a specific Pokemon and print the output
@@ -16,8 +16,8 @@ import logging
 from config import api_auth_key
 
 
-#this func takes in the enteref id number
-def choosePokemon(pokemon_number):
+# this func takes in the entered id number
+def connectToAPI(pokemon_number):
     try:
         url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
         response = requests.get(url)
@@ -35,72 +35,58 @@ def choosePokemon(pokemon_number):
         print("Pokemon {} chosen".format(pokemon_number))
         return pokemon
 
+
+
+
 def getPokeName(pokemon):
 
-    nameOfPoke = pokemon['name']
-    return nameOfPoke
+    name_of_poke = pokemon['name']
+    return name_of_poke
+
+
 
 
 def getPokeWeight(pokemon):
-    weightOfPoke = pokemon['weight']
-    return weightOfPoke
+    weight_of_poke = pokemon['weight']
+    return weight_of_poke
 
 
 
 
-def sendPokeInfo(nameOfPoke,weightOfPoke):
-    body = {"Name": " {}".format(nameOfPoke),
+def sendPokeInfoToAPI(nameOfPoke, weightOfPoke):
+    post_body = {"Name": " {}".format(nameOfPoke),
             "Weight": "{}".format(weightOfPoke)}
 
-    headers = {'content-type': 'application/json',
+    post_header = {'content-type': 'application/json',
                'Authorization': '{key}'.format(key=api_auth_key)}
 
-    # POST REQUEST W/headers and body
+    # POST REQUEST W/post_header and post_body
     try:
         result = requests.post(
-            'http://httpbin.org/post', headers=headers,
-            data=json.dumps(body)  # json.dumps = serializing - turns python dictionary into json string
+            'http://httpbin.org/post', headers=post_header,
+            data=json.dumps(post_body)  # json.dumps = serializing - turns python dictionary into json string
         )
     except requests.exceptions.HTTPError:
         print(
             "POST Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(
                 result.status_code))
     else:
-        print("POST Request is successful, Status code:", result.status_code)
         print(result.text)
-        return result.text
-
-def sendPokeInfo(nameOfPoke,weightOfPoke):
-    body = {"Name": " {}".format(nameOfPoke),
-            "Weight": "{}".format(weightOfPoke)}
-
-    headers = {'content-type': 'application/json',
-               'Authorization': '{key}'.format(key=api_auth_key)}
-
-    # POST REQUEST W/headers and body
-    try:
-        result = requests.post(
-            'http://httpbin.org/post', headers=headers,
-            data=json.dumps(body)  # json.dumps = serializing - turns python dictionary into json string
-        )
-    except requests.exceptions.HTTPError:
-        print(
-            "POST Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(result.status_code))
-    else:
-        print(result.text)  # to check the 'post' request
-        return "POST Request is successful, Status code: {}".format(result.status_code)
+        # print("POST Request is successful, Status code:", result.status_code)
+        return "POST Request is successful, Status code:", result.status_code
 
 
 
-def viewPokeInfo(nameOfPoke,weightOfPoke):
-    body1 = {"Name": " {}".format(nameOfPoke),
+
+def viewPokeInfoFromAPI(nameOfPoke, weightOfPoke):
+    get_body = {"Name": " {}".format(nameOfPoke),
              "Weight": "{}".format(weightOfPoke)}
 
-    headers1 = {'content-type': 'application/json',
+    get_header = {'content-type': 'application/json',
                 'Authorization': '{key}'.format(key=api_auth_key)}
     try:
         result1 = requests.get(
-            'http://httpbin.org/get', params=body1, headers=headers1,
+            'http://httpbin.org/get', params=get_body, headers=get_header,
         )
 
     except requests.exceptions.HTTPError:
@@ -109,6 +95,7 @@ def viewPokeInfo(nameOfPoke,weightOfPoke):
                 result1.status_code))
     else:
         print(result1.text)  # to check that the 'get' request
+        #print("GET Request is successful, Status code: {}".format(result1.status_code))
         return "GET Request is successful, Status code: {}".format(result1.status_code)
 
 
@@ -117,11 +104,13 @@ def viewPokeInfo(nameOfPoke,weightOfPoke):
 #This runs the flow of the code-like piecing the puzzle pieces together in correct order#
 def main():
     pokemon_number = input("Enter a pokemon ID:")
-    ourPokemon = choosePokemon(pokemon_number)
-    name = getPokeName(ourPokemon)
-    weight = getPokeWeight(ourPokemon)
-    print(sendPokeInfo(nameOfPoke=name, weightOfPoke=weight))
-    print(viewPokeInfo(nameOfPoke=name, weightOfPoke=weight))
+    our_pokemon = connectToAPI(pokemon_number)
+    name = getPokeName(our_pokemon)
+    weight = getPokeWeight(our_pokemon)
+    print(sendPokeInfoToAPI(nameOfPoke=name, weightOfPoke=weight))
+    print(viewPokeInfoFromAPI(nameOfPoke=name, weightOfPoke=weight))
+
+
 
 
 if __name__ == '__main__':

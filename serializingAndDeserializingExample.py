@@ -1,4 +1,10 @@
-# JSON - LOADS - deserializing and  DUMPS - serializing example
+"""
+This is an example of derserialization and serialization.
+
+LOADS - deserializing
+DUMPS - serializing example
+
+"""
 
 import json
 

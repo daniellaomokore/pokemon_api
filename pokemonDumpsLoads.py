@@ -52,6 +52,9 @@ from config import api_auth_key
 
 logging.basicConfig(filemode='example.log', format='%(asctime)s %(message)s', encoding='utf-8', level=logging.WARNING)
 
+http_endpoint_url = "http://httpbin.org"
+
+
 try:
     pokemon_number = int(input("What is the Pokemon's ID number?"))
     url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
@@ -66,8 +69,6 @@ else:
     print("Status code:", response.status_code)
 
 
-# YOU MIGHT NEED TO NEST ALL CODE BELOW INTO THE ELSE: above
-
 #print(type(response))   ## prints the data type : 'request.models.Response''
 
 
@@ -79,8 +80,8 @@ data = response.text
 
 pokemon = json.loads(data)  # deserializing - turns json string into python dictionary that can be now accessed
 
-nameOfPoke = pokemon['name']
-weightOfPoke = pokemon['weight']
+name_of_poke = pokemon['name']
+weight_of_poke = pokemon['weight']
 
 #print("Name: ", nameOfPoke)      # in python object form
 #print(json.dumps(nameOfPoke))    # in json string form
@@ -89,47 +90,45 @@ weightOfPoke = pokemon['weight']
 
 # INITIALISING THE BODY AND HEADERS FOR REQUESTS
 # YOU would probably have a different body depending on the request you want to do
-body = {"Name": " {}".format(nameOfPoke),
-        "Weight": "{}".format(weightOfPoke)}
+post_body = {"Name": " {}".format(name_of_poke),
+        "Weight": "{}".format(weight_of_poke)}
 
-headers = {'content-type': 'application/json',
+post_header = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}
-
-
-
 
 
 # POST REQUEST W/headers and body
 try:
-    result = requests.post(
-        'http://httpbin.org/post', headers=headers,
-        data=json.dumps(body)  # json.dumps = serializing - turns python dictionary into json string
+    post_result = requests.post(
+        '{}/post'.format(http_endpoint_url), headers=post_header,
+        data=json.dumps(post_body)  # json.dumps = serializing - turns python dictionary into json string
     )
 except requests.exceptions.HTTPError:
-    print("POST Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(result.status_code))
+    print("POST Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(post_result.status_code))
 else:
-    print("POST Request is successful, Status code:", result.status_code)
-    print(result.text)
+    print("POST Request is successful, Status code:", post_result.status_code)
+    print(post_result.text)
 
 
 
-body1 = {"gum": 5,
+
+get_body = {"gum": 5,
         "nim": 10}
 
-headers1 = {'content-type': 'application/json',
+get_headers = {'content-type': 'application/json',
            'Authorization': '{key}'.format(key=api_auth_key)}
 
 
 # GET REQUEST with headers and query string (using 'params')
 try:
-    result1 = requests.get(
-        'http://httpbin.org/get', params=body1, headers=headers1,
+    get_result = requests.get(
+        '{}/get'.format(http_endpoint_url), params=get_body, headers=get_headers,
     )
 except requests.exceptions.HTTPError:
-    print("GET Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(result1.status_code))
+    print("GET Request returned an error, Bad Status Code: {}. If you entered the URL manually check your spelling and try again".format(get_result.status_code))
 else:
-    print("GET Request is successful, Status code: {}".format(result1.status_code))
-    print(result1.text)
+    print("GET Request is successful, Status code: {}".format(get_result.status_code))
+    print(get_result.text)
 
 
 

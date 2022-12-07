@@ -38,8 +38,12 @@ class useAPI:
         except requests.exceptions.ConnectionError as cerr:
             print("Sorry a Connection error has been found")
             logging.warning(cerr)
+            return "No Connection"
+        except json.decoder.JSONDecodeError:
+            return "No Connection"
         except requests.exceptions.HTTPError as err:
             print("Bad Status Code", response.status_code)
+            return "No Connection"
         else:
             print("Status code:", response.status_code)
             print("Pokemon {} chosen".format(self.pokemon_number))
@@ -83,7 +87,7 @@ class useAPI:
         else:
             print(result.text)
             #print("POST Request is successful, Status code:", result.status_code)
-            return "POST Request is successful, Status code:", result.status_code
+            return "POST Request is successful, Status code: {}".format(result.status_code)
 
 
 

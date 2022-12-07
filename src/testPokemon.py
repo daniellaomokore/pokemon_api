@@ -39,3 +39,4 @@ class TestViewPokeInfo(TestCase):
     def test_good_get_request(self):
 
         self.assertEqual(useAPI.viewPokeInfoFromAPI(self,name_of_poke="yella", weight_of_poke="2"),("GET Request is successful, Status code: 200" ))
+

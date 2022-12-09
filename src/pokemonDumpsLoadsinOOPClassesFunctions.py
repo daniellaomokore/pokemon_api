@@ -16,18 +16,22 @@ import logging
 from config import api_auth_key
 
 
+logging.basicConfig(filemode='example.log', format='%(asctime)s %(message)s', encoding='utf-8', level=logging.WARNING)
 
+http_endpoint_url = "http://httpbin.org"
+connection_attempts = 0
 
 class useAPI:
-    def __init__(self, pokemon_number):
+    def __init__(self, pokemon_number, connection_attempts):
         self.pokemon_number = pokemon_number
+        self.connection_attempts = connection_attempts
 
-
-
-
+    
     # this func takes in the entered id number
     def connectToAPI(self):
         try:
+            self.connection_attempts += 1
+            print(self.connection_attempts)
             url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(self.pokemon_number)
             response = requests.get(url)
             response.raise_for_status()
@@ -35,19 +39,18 @@ class useAPI:
             pokemon = json.loads(
                 data)  # deserializing - turns json string into python dictionary that can be now accessed
 
-        except requests.exceptions.ConnectionError as cerr:
-            print("Sorry a Connection error has been found")
-            logging.warning(cerr)
-            return "No Connection"
-        except json.decoder.JSONDecodeError:
-            return "No Connection"
-        except requests.exceptions.HTTPError as err:
-            print("Bad Status Code", response.status_code)
-            return "No Connection"
-        else:
-            print("Status code:", response.status_code)
-            print("Pokemon {} chosen".format(self.pokemon_number))
-            return pokemon
+        except Exception as e:
+
+            if self.connection_attempts == 3:
+                raise e
+            else:
+                print("Trying Again")
+                useAPI.connectToAPI()
+
+
+        print("Status code:", response.status_code)
+        print("Pokemon {} chosen".format(self.pokemon_number))
+        return pokemon
 
 
 
@@ -77,7 +80,7 @@ class useAPI:
         # POST REQUEST W/post_header and post_body
         try:
             result = requests.post(
-                'http://httpbin.org/post', headers=post_header,
+                "{}/post".format(http_endpoint_url), headers=post_header,
                 data=json.dumps(post_body)  # json.dumps = serializing - turns python dictionary into json string
             )
         except requests.exceptions.HTTPError:
@@ -100,7 +103,7 @@ class useAPI:
                       'Authorization': '{key}'.format(key=api_auth_key)}
         try:
             result1 = requests.get(
-                'http://httpbin.org/get', params=get_body, headers=get_header,
+                "{}/get".format(http_endpoint_url), params=get_body, headers=get_header,
             )
 
         except requests.exceptions.HTTPError:
@@ -118,7 +121,7 @@ class useAPI:
 # This runs the flow of the code-like piecing the puzzle pieces together in correct order#
 def main():
     pokemon_number = int(input("Enter a pokemon ID:"))
-    current_user = useAPI(pokemon_number)
+    current_user = useAPI(pokemon_number,connection_attempts)
     our_pokemon = current_user.connectToAPI()
     name = current_user.getPokeName(our_pokemon)
     weight = current_user.getPokeWeight(our_pokemon)

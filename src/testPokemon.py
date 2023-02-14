@@ -1,7 +1,7 @@
 import json
 from unittest import TestCase
 import requests
-from pokemonDumpsLoadsinOOPClassesFunctions import useAPI
+from pokemonOOP import useAPI
 
 
 class TestConnectToAPI(TestCase):

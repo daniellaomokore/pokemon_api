@@ -1,7 +1,5 @@
-# My attempt to put the code into classes + functions
-
 """
-Get the height and weight of a specific Pokemon and print the output
+Get the name and weight of a specific Pokemon using the PokemonAPI and print the output.
 
 !!! Extension !!! Print the names of all a specific Pokemon's moves
 
@@ -9,7 +7,10 @@ NOTE:
 -json.loads() method converts a JSON string into a Python Dictionary:deserializing
 -json.dumps() method converts a Python object and into a JSON string : serializing
 
+OOP, Classes, Functions, json, http & error handling used.
+
 """
+
 import requests
 import json
 import logging

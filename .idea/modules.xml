@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/OtherCode/.idea/OtherCode.iml" filepath="$PROJECT_DIR$/OtherCode/.idea/OtherCode.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/pokemon_api.iml" filepath="$PROJECT_DIR$/.idea/pokemon_api.iml" />
     </modules>
   </component>

@@ -3,10 +3,6 @@ from unittest import TestCase
 import requests
 from pokemonDumpsLoadsinOOPClassesFunctions import useAPI
 
-"""
-With more time I would cover all edge cases and test the api when unsuccessful and bad requests are made,
-"""
-
 
 class TestConnectToAPI(TestCase):
     pokemon_number = 1

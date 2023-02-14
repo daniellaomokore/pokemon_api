@@ -5,30 +5,14 @@ It allows the user to get the Name and Weight of their selected pokemon from the
 It also allows a user get information from the seperate api and view it.
 
 
-⬇️<b>How To Run:</b>
+✨<b>How to Run:</b>
 
-<i>Before running you must</i>:
+* Install the dependencies by running `pip install -r requirements.txt` in the terminal or command prompt on your system.
 
-* Install Python 3.11 or the most up to date version of Python
+* set up your environmental variables in a '.env' file in the root. With variables for API = "[your secret api key user]"
 
+* Press the run button and follow the prompts
 
-* Entered in your api key into the project's config file
+✨<b>How to Test:</b>
 
-
-* Installed all the python libraries used in the project, these are as follows:
-                          * requests
-                          * mysql.connector
-                          * flask
-                          * schedule
-                          * time
-                          * itertools
-                          * re
-                          * random
-                          * datetime/Delta
-                          * collections - Counter
-
-  
-* Press the run button
-
-
-* Enter in a pokemon id number when prompted to
+* Run the 'testPokemon.py' file in the src directory.

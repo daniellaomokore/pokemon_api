@@ -11,8 +11,8 @@ It also allows a user get information from the seperate api and view it.
 
 * set up your environmental variables in a '.env' file in the root. With variables for APIKEY = "[your secret api key user]"
 
-* Run the 'pokemonOOP.py' file in the src directory and follow the prompt.
+* Run the 'pokemonOOP.py' file in the 'src' directory and follow the prompt.
 
 ✨<b>How to Test:</b>
 
-* Run the 'testPokemon.py' file in the src directory.
+* Run the 'testPokemon.py' file in the 'src' directory.

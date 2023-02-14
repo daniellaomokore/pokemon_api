@@ -1,2 +1,5 @@
-*OtherCode
-*.env
+import os
+
+
+OtherCode/*
+.env
